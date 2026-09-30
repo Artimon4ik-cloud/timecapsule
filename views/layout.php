@@ -86,5 +86,6 @@ $navLink = function (string $key, string $href, string $label) use ($nav): strin
   </div>
 </footer>
 <p>TimeCapsule — updated manually</p>
+<p>Author: Artiom Gherganov</p>
 </body>
 </html>
