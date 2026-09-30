@@ -89,5 +89,3 @@ $navLink = function (string $key, string $href, string $label) use ($nav): strin
 <p>Author: Artiom Gherganov</p>
 </body>
 </html>
-
-<?php broken(
