@@ -85,6 +85,6 @@ $navLink = function (string $key, string $href, string $label) use ($nav): strin
     Served by <code><?= e(gethostname()) ?></code> · DB: <code><?= e(config('DB_HOST', 'localhost')) ?></code> · Files: <code>local disk (<?= e(config('UPLOAD_DIR', 'storage/uploads')) ?>)</code>
   </div>
 </footer>
-
+<p>TimeCapsule — updated manually</p>
 </body>
 </html>
