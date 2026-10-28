@@ -61,7 +61,7 @@ function storage_save(array $uploadedFile, string $extension): string
     if (storage_driver() === 's3') {
         storage_s3_client()->putObject([
             'Bucket' => config('S3_BUCKET'),
-            'Key' => $storedName,
+            'Key' => 'uploads/' . $storedName,
             'SourceFile' => $uploadedFile['tmp_name'],
         ]);
 
@@ -89,7 +89,7 @@ function storage_delete(?string $storedName): void
     if (storage_driver() === 's3') {
         storage_s3_client()->deleteObject([
             'Bucket' => config('S3_BUCKET'),
-            'Key' => $storedName,
+            'Key' => 'uploads/' . $storedName,
         ]);
 
         return;
@@ -126,7 +126,7 @@ function storage_stream(string $storedName, string $mime, string $downloadName, 
 
         $command = $client->getCommand('GetObject', [
             'Bucket' => config('S3_BUCKET'),
-            'Key' => $storedName,
+            'Key' => 'uploads/' . $storedName,
             'ResponseContentType' => $mime,
             'ResponseContentDisposition' => $contentDisposition,
         ]);
