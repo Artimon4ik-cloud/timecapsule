@@ -59,10 +59,19 @@ function storage_save(array $uploadedFile, string $extension): string
     $storedName = bin2hex(random_bytes(16)) . '.' . $extension;
 
     if (storage_driver() === 's3') {
+        $mimeTypes = [
+	    'pdf' => 'application/pdf',
+            'png'  => 'image/png',
+            'jpg'  => 'image/jpeg',
+            'jpeg' => 'image/jpeg',
+  	];
+	 $contentType = $mimeTypes[strtolower($extension)] ?? 'application/octet-stream';
+
         storage_s3_client()->putObject([
             'Bucket' => config('S3_BUCKET'),
             'Key' => 'uploads/' . $storedName,
             'SourceFile' => $uploadedFile['tmp_name'],
+	    'ContentType' => $contentType,
         ]);
 
         return $storedName;
