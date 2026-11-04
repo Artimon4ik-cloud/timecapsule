@@ -271,7 +271,6 @@ aws s3 ls s3://timecapsule-dev-uploads-artimon4ik/uploads/
 ![alt text](<screenshots/TimeCapsule — AWS VPC Architecture (Lab 4).png>)
 
 
-Архитектурное решение описано в [ADR 0003 — Attachment Storage](../../adr/0003-attachment-storage.md) (путь предполагает размещение этого отчёта в `docs/lab4/` существующего репозитория).
 
 **Сравнение вариантов хранения:**
 
