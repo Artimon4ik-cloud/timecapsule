@@ -231,6 +231,7 @@ db.timecapsule.internal
 
 В проекте подготовлен ADR `docs/adr/0004-database-hosting.md`, описывающий выбор Amazon RDS Single-AZ вместо PostgreSQL на EC2, RDS Multi-AZ и Aurora PostgreSQL. В ADR рассмотрены управляемость, стоимость, резервное копирование, RPO/RTO, ограничения Single-AZ и автоматическая остановка.
 
+<img width="692" height="480" alt="image" src="https://github.com/user-attachments/assets/1a283d3b-30e0-4d7e-b109-534d1aed2f05" />
 
 
 ---
