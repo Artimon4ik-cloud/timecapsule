@@ -66,38 +66,9 @@ function capsule_delete(int $id): void
     db_query('DELETE FROM capsules WHERE id = ?', [$id]);
 }
 
-// Open every capsule whose open time has passed and add an "is now open" notification.
-// Called at the start of every web request (see public/index.php).
-//
-// One UPDATE both opens the capsules and returns them. It only returns the rows it
-// changed ("opened_at IS NULL"), so two requests running at the same time never open
-// (and notify about) the same capsule twice.
-function open_due_capsules(): void
-{
-    $now = now_utc();
-
-    $opened = db_query(
-        'UPDATE capsules c
-            SET opened_at = ?
-           FROM users u
-          WHERE u.id = c.user_id AND c.opened_at IS NULL AND c.open_at <= ?
-      RETURNING c.id, c.user_id, c.title, c.recipient_email, u.email',
-        [$now, $now]
-    )->fetchAll();
-
-    foreach ($opened as $capsule) {
-        notify_insert(
-            (int) $capsule['id'],
-            (int) $capsule['user_id'],
-            $capsule['recipient_email'] ?? $capsule['email'],
-            sprintf('Your capsule "%s" is now open.', $capsule['title'])
-        );
-    }
-}
-
 // ---------- state and access rules ----------
 
-// A capsule is opened only when open_due_capsules() has processed it.
+// A capsule is opened when the Lambda Opener has processed it.
 function capsule_is_opened(array $capsule): bool
 {
     return $capsule['opened_at'] !== null;
@@ -191,6 +162,7 @@ function parse_utc_minute(string $value, string $pattern): ?DateTimeImmutable
 
     [$year, $month, $day, $hour, $minute] = array_map('intval', array_slice($parts, 1, 5));
     $second = (int) ($parts[6] ?? 0);
+
     // Reject values like 2026-02-31 or 25:00 instead of letting PHP roll them over.
     if (!checkdate($month, $day, $year) || $hour > 23 || $minute > 59 || $second > 59) {
         return null;

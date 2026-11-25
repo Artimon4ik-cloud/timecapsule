@@ -52,10 +52,8 @@ function capsules_store(): void
     $data['user_id'] = (int) $user['id'];
     $capsule = capsule_create($data);
 
-    // 3. "Send" the confirmation e-mail. This is the slow part of the request (see mailer.php).
-    $recipient = $capsule['recipient_email'] ?? $user['email'];
-    $text = sprintf('Capsule "%s" was sealed for you until %s.', $capsule['title'], format_utc($capsule['open_at']));
-    mail_send($capsule, $recipient, $text);
+    // 3. Publish the capsule sealed event to SNS.
+    publish_capsule_sealed((int) $capsule['id']);
 
     flash('success', 'Capsule sealed.');
     redirect('/capsules/' . $capsule['id']);

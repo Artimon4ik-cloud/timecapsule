@@ -6,7 +6,7 @@
 // the Notifications page. The wait happens inside the web request, so "Seal capsule"
 // takes about MAIL_DELAY_SECONDS.
 
-// Write one notification row directly (no delay). Also used by open_due_capsules().
+// Write one notification row directly (no delay).
 function notify_insert(int $capsuleId, int $userId, string $recipient, string $message): void
 {
     db_query(

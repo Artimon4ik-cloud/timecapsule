@@ -1,6 +1,5 @@
 <?php
-// GET /notifications — the "e-mails" the app would have sent (rows written by mailer.php
-// and open_due_capsules()).
+// GET /notifications - displays notifications created by Lambda Mailer and Lambda Opener.
 function notifications_index(): void
 {
     $user = require_user();

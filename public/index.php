@@ -48,13 +48,8 @@ if (auth_enabled()) {
 $method = $_SERVER['REQUEST_METHOD'];
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) ?: '/';
 
-// The health check is called often by monitoring tools:
-// do not create a session file or open capsules for each of those calls.
 if ($path !== '/health') {
     start_session();
-
-    // Open due capsules before any page is rendered, so pages always show the current state.
-    open_due_capsules();
 }
 
 foreach ($routes as [$routeMethod, $pattern, $handler]) {
